@@ -1,10 +1,12 @@
+'use client'
 import { navLinks } from "@/constants/navLinks";
+import { Button } from "@heroui/react";
 import Link from "next/link";
 
 const Navbar = () => {
   return (
     <header className="border-b">
-      <nav className="max-w-7xl mx-auto h-16 px-4 flex items-center justify-between">
+      <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5">
 
         {/* logo */}
         <Link href={'/'}>
@@ -12,10 +14,13 @@ const Navbar = () => {
         </Link>
 
         {/* menu */}
-        <div>
+        <div className="flex items-center gap-8">
           {
             navLinks.map((link) => (
-              <Link key={link.href} href={link.href}>
+              <Link key={link.href}
+                href={link.href}
+              className="font-medium transition hover:text-primary"
+              >
                {link.label}
               </Link>
             ))
@@ -23,8 +28,26 @@ const Navbar = () => {
         </div>
 
         {/* auth */}
-        <div>
-          Login Register
+        <div className="flex items-center gap-3">
+          <Link href={"/login"}>
+          <Button
+            variant="outline"
+            // color="primary"
+            // radius="full"
+          >
+            Login
+          </Button>
+          </Link>
+
+          <Link href={"/register"}>
+           <Button
+            variant="outline"
+            // color="primary"
+            // radius="full"
+          >
+            Register
+          </Button>
+          </Link>
         </div>
 
       </nav>
