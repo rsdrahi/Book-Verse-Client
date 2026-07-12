@@ -1,12 +1,16 @@
 'use client'
-import { Button, Card, CardContent, CardFooter, CardHeader, Form, Input } from '@heroui/react';
+import { signUp } from '@/lib/auth-client';
+import { Button, Card, CardContent, CardFooter, CardHeader, Form, Input} from '@heroui/react';
 import { Lock, Mail, User } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
+import toast from 'react-hot-toast';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const RegisterPage = () => {
 
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -16,8 +20,36 @@ const RegisterPage = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const data = Object.fromEntries(formData);
-    console.log("Register Data", data);
+    const data = Object.fromEntries(formData) as {
+      name: string;
+      email: string;
+      password: string;
+      confirmPassword: string;
+    };
+    // console.log("Register Data", data);
+    if (data.password !== data.confirmPassword) {
+      toast.error("Password Do not Match")
+      return;
+    }
+
+    const {data: user, error}= await signUp.email(
+      {
+        name: data.name,
+        email: data.email,
+        password: data.password,
+        // confirmPassword: data.confirmPassword,
+      }
+    );
+    if (error) {
+      toast.error("Register Failed");
+      return;
+    };
+    if (user) {
+      toast.success("Registration Successful");
+      router.push("/login")
+    }
+    
+    console.log(user, "User");
   }
 
   return (
