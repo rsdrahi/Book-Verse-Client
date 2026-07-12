@@ -1,9 +1,18 @@
 'use client'
 import { navLinks } from "@/constants/navLinks";
+import { signOut, useSession } from "@/lib/auth-client";
 import { Button } from "@heroui/react";
 import Link from "next/link";
 
 const Navbar = () => {
+
+  const { data: session, isPending } = useSession();
+  console.log(session, "Session");
+
+  const handleSignOut = async () => {
+    await signOut();
+  }
+
   return (
     <header className="border-b">
       <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5">
@@ -28,27 +37,34 @@ const Navbar = () => {
         </div>
 
         {/* auth */}
-        <div className="flex items-center gap-3">
+        {session ? (
+          <div className="flex items-center gap-3">
+            <span className="font-medium">
+              {session.user.name}
+            </span>
+            <Button
+              variant="outline"
+              onClick={handleSignOut}
+            >
+              Logout
+            </Button>
+          </div>
+        ) : <div className="flex items-center gap-3">
           <Link href={"/login"}>
           <Button
             variant="outline"
-            // color="primary"
-            // radius="full"
           >
             Login
           </Button>
           </Link>
-
           <Link href={"/register"}>
            <Button
             variant="outline"
-            // color="primary"
-            // radius="full"
           >
             Register
           </Button>
           </Link>
-        </div>
+        </div>}
 
       </nav>
     </header>

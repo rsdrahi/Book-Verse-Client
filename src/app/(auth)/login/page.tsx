@@ -5,17 +5,38 @@ import Link from 'next/link';
 import { Card, CardHeader, CardFooter, Button } from '@heroui/react';
 import { Lock, Mail } from 'lucide-react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { useRouter } from 'next/navigation';
+import { signIn } from '@/lib/auth-client';
+import toast from 'react-hot-toast';
 
 const LoginPage = () => {
-  const [showPassword, setShowPassword] = useState(false);
 
+  const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const data = Object.fromEntries(formData);
-    console.log("Login Data", data);
+    const data = Object.fromEntries(formData) as {
+      email: string,
+      password: string,
+    };
+    const { data: user, error } = await signIn.email(
+      {
+        email: data.email,
+        password: data.password,
+      }
+    );
+    // console.log("Login Data", data);
+    if (error) {
+      toast.error("Login Failed");
+      return;
+    }
+    if (user) {
+      toast.success("Login Successful!");
+      router.push("/")
+    }
   };
 
   return (
