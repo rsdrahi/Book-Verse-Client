@@ -8,3 +8,4 @@ export interface Book {
   totalCopies: number;
   availableCopies: number;
 }
+

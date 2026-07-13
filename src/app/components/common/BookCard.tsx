@@ -13,19 +13,20 @@ const BookCard = ({ book }: BookCardProps) => {
   const { _id, title, author, category, coverImage, availableCopies,
     totalCopies, } = book;
   return (
-      <Card className="h-full overflow-hidden rounded-2xl border border-default-200 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+      <Card className="h-full flex flex-col overflow-hidden rounded-2xl border border-default-200 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
       <CardContent className="flex flex-col gap-3">
         {/* Image Section */}
-        <div className="relative h-48 overflow-hidden">
+        <div className="relative h-48 overflow-hidden rounded-lg">
           <Image
             alt={title}
-              src={coverImage}
-              fill
+            src={coverImage}
+            fill
+            className="rounded-lg transition-transform duration-300 scale-110 hover:scale-100"
           />
         </div>
 
         {/* Content Section */}
-        <div className="flex flex-col flex-grow">
+        <div className="flex flex-col flex-1">
           {/* Category & Rating */}
           <div className="flex items-center justify-between gap-2">
             <span className="flex items-center gap-1 text-xs font-medium text-default-500 bg-default-100 px-2.5 py-1 rounded-full">
@@ -52,16 +53,14 @@ const BookCard = ({ book }: BookCardProps) => {
       </CardContent>
 
       {/* Footer Section: Price & Action */}
-      <CardFooter>
           <Link href={`/books/${_id}`}>
-          <Button
-          className="font-medium shadow-md shadow-primary/20"
+        <Button
+          variant="outline"
+          className="w-full"
         >
           View Details
         </Button>
           </Link>
-      </CardFooter>
-
     </Card>
   );
 };

@@ -3,7 +3,6 @@ import { Button } from '@heroui/react';
 import Link from 'next/link';
 import React from 'react';
 import BookCard from '../common/BookCard';
-import Container from '../common/Container';
 
 const FeaturedBooks = async () => {
 

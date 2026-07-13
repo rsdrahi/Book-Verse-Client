@@ -1,17 +1,18 @@
 import { Book } from "@/app/types/books";
-import { serverFetch } from "../server"
+import { serverFetch } from "../server";
 
-export const getAllBooks = async (): Promise<Book[]> => {
-  const res = await serverFetch("/books");
-  return res;
-}
+export const getAllBooks = async (search?: string): Promise<Book[]> => {
+  const path = search ? `/books?search=${search}` : "/books";
+  return await serverFetch(path);
+};
 
 export const getFeaturedBooks = async (): Promise<Book[]> => {
-  const books: Book[] = await serverFetch("/books");
+  const books = await getAllBooks();
   return books.slice(0, 4);
-}
+};
 
-export const getSingleBook = async (id: string): Promise<Book[]> => {
-  const res = await serverFetch(`/books/${id}`);
-  return res;
-}
+export const getSingleBook = async (
+  id: string
+): Promise<Book> => {
+  return await serverFetch(`/books/${id}`);
+};
