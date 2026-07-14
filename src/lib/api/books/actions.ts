@@ -26,3 +26,22 @@ export const bookBorrow = async (borrowData: {
   });
   return res.json();
 }
+
+export const addBookForm = async (bookData: {
+  title: string;
+  author: string;
+  category: string;
+  description: string;
+  coverImage: string;
+  totalCopies: number;
+  availableCopies: number;
+}) => {
+  const res = await fetch(`${baseUrl}/books`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(bookData)
+  });
+  return res.json()
+}

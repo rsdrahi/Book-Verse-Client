@@ -1,4 +1,9 @@
+'use client'
+import { addBookForm } from "@/lib/api/books/actions";
 import { Button } from "@heroui/react";
+import { useRouter } from "next/navigation";
+import React from "react";
+import toast from "react-hot-toast";
 
 const categories = [
   "Programming",
@@ -12,6 +17,33 @@ const categories = [
 ];
 
 const AddBookPage = () => {
+
+  const router = useRouter();
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const bookData = {
+      title: formData.get("title") as string,
+      author: formData.get("author") as string,
+      category: formData.get("category") as string,
+      description: formData.get("description") as string,
+      coverImage: formData.get("coverImage") as string,
+      totalCopies: Number(formData.get("totalCopies")),
+      availableCopies: Number(formData.get("availableCopies")),
+    };
+    const data = await addBookForm(bookData);
+    console.log(data, "Form data");
+    if (data) {
+      form.reset();
+      toast.success("Book Added Successfully")
+      router.push("/dashboard/manage-books");
+    }
+    else {
+      toast.error("Something Went Wrong")
+    }
+  }
+
   return (
     <section className="w-full"> 
       <div className="mb-8">
@@ -21,7 +53,7 @@ const AddBookPage = () => {
         </p>
       </div>
 
-      <form className="bg-white border rounded-2xl shadow-sm p-8 space-y-6 w-full">
+      <form onSubmit={handleSubmit} className="bg-white border rounded-2xl shadow-sm p-8 space-y-6 w-full">
         {/* Row 1 */}
         <div className="grid md:grid-cols-2 gap-6">
           <div>
