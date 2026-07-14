@@ -1,5 +1,5 @@
 import { Cards, Menus } from "@/app/types/dashboard";
-import { BookOpen, ClipboardList, LayoutDashboard, PlusCircle } from "lucide-react";
+import { BookOpen, ClipboardList, LayoutDashboard, PlusCircle, User } from "lucide-react";
 
 export const menus: Menus[] = [
   {
@@ -18,9 +18,9 @@ export const menus: Menus[] = [
     icon: BookOpen,
   },
   {
-    name: "Borrow Summary",
-    href: "/dashboard/borrow-summary",
-    icon: ClipboardList,
+    name: "Profile",
+    href: "/dashboard/profile",
+    icon: User,
   },
 ];
 
@@ -36,8 +36,8 @@ export const cards: Cards[] = [
     icon: BookOpen,
   },
   {
-    title: "Borrow Summary",
-    value: "Borrow History",
-    icon: ClipboardList,
+    title: "Profile",
+    value: "Profile",
+    icon: User,
   },
 ]

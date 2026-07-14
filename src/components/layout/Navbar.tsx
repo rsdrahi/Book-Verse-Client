@@ -1,72 +1,166 @@
-'use client'
+'use client';
+
+import { useState } from "react";
+import Link from "next/link";
+import { Menu, X } from "lucide-react";
+import { Avatar, Button } from "@heroui/react";
+
 import { navLinks } from "@/constants/navLinks";
 import { signOut, useSession } from "@/lib/auth-client";
-import { Button } from "@heroui/react";
-import Link from "next/link";
 
 const Navbar = () => {
-
-  const { data: session, isPending } = useSession();
-  console.log(session, "Session");
+  const { data: session } = useSession();
+  const [open, setOpen] = useState(false);
 
   const handleSignOut = async () => {
     await signOut();
-  }
+  };
+
+  const links = session
+    ? [
+        ...navLinks,
+        {
+          label: "Dashboard",
+          href: "/dashboard",
+        },
+      ]
+    : navLinks;
 
   return (
-    <header className="border-b">
-      <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5">
+    <header className="sticky top-0 z-50 border-b bg-white">
+      <nav className="max-w-7xl mx-auto flex h-16 items-center justify-between px-5">
 
-        {/* logo */}
-        <Link href={'/'}>
-        <h1 className="text-2xl font-bold">Book Verse</h1>
+        {/* Logo */}
+        <Link href="/">
+          <h1 className="text-2xl font-bold">
+            Book Verse
+          </h1>
         </Link>
 
-        {/* menu */}
-        <div className="flex items-center gap-8">
-          {
-            navLinks.map((link) => (
-              <Link key={link.href}
-                href={link.href}
-              className="font-medium transition hover:text-primary"
-              >
-               {link.label}
-              </Link>
-            ))
-          }  
+        {/* Desktop Menu */}
+        <div className="hidden md:flex items-center gap-8">
+          {links.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="font-medium hover:text-primary transition"
+            >
+              {link.label}
+            </Link>
+          ))}
         </div>
 
-        {/* auth */}
-        {session ? (
-          <div className="flex items-center gap-3">
-            <span className="font-medium">
-              {session.user.name}
-            </span>
-            <Button
-              variant="outline"
-              onClick={handleSignOut}
-            >
-              Logout
-            </Button>
-          </div>
-        ) : <div className="flex items-center gap-3">
-          <Link href={"/login"}>
-          <Button
-            variant="outline"
-          >
-            Login
-          </Button>
-          </Link>
-          <Link href={"/register"}>
-           <Button
-            variant="outline"
-          >
-            Register
-          </Button>
-          </Link>
-        </div>}
+        {/* Desktop Auth */}
+        <div className="hidden md:flex items-center gap-3">
+          {session ? (
+            <>
+              <Link href="/dashboard/profile">
+                <Avatar
+                 size="md"
+                 className="cursor-pointer"
+                 src={session.user.image || undefined}
+                 name={session.user.name || "User"}
+                />
+             </Link>
 
+              <Button
+                onClick={handleSignOut}
+              >
+                Logout
+              </Button>
+            </>
+          ) : (
+            <>
+              <Link href="/login">
+                <Button>
+                  Login
+                </Button>
+              </Link>
+
+              <Link href="/register">
+                <Button>
+                  Register
+                </Button>
+              </Link>
+            </>
+          )}
+        </div>
+
+        {/* Mobile Toggle */}
+        <Button
+          isIconOnly
+          className="md:hidden"
+          onClick={() => setOpen(!open)}
+        >
+          {open ? <X size={22} /> : <Menu size={22} />}
+        </Button>
       </nav>
+
+      {/* Mobile Menu */}
+      {open && (
+        <div className="md:hidden border-t bg-white shadow">
+
+          <div className="flex flex-col gap-4 p-5">
+
+            {links.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setOpen(false)}
+                className="font-medium"
+              >
+                {link.label}
+              </Link>
+            ))}
+
+            <hr />
+
+            {session ? (
+              <>
+                <div className="flex items-center gap-3">
+                  <Avatar
+                    size="sm"
+                    name={session.user.name || "U"}
+                  />
+
+                  <span>{session.user.name}</span>
+                </div>
+
+                <Button
+                  onClick={handleSignOut}
+                >
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  onClick={() => setOpen(false)}
+                >
+                  <Button
+                    className="w-full"
+                  >
+                    Login
+                  </Button>
+                </Link>
+
+                <Link
+                  href="/register"
+                  onClick={() => setOpen(false)}
+                >
+                  <Button
+                    className="w-full"
+                  >
+                    Register
+                  </Button>
+                </Link>
+              </>
+            )}
+          </div>
+
+        </div>
+      )}
     </header>
   );
 };

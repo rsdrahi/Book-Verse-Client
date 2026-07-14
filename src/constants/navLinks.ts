@@ -16,12 +16,8 @@ export const navLinks: NavLink[] = [
     label: "About",
     href: "/about"
   },
-  // {
-  //   label: "Login",
-  //   href: "/login"
-  // },
-  // {
-  //   label: "Register",
-  //   href: "/register"
-  // },
+  {
+    label: "Contact",
+    href: "/contact"
+  },
 ];
