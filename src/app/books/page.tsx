@@ -2,15 +2,21 @@ import { getAllBooks} from '@/lib/api/books/server';
 import BookCard from '../components/common/BookCard';
 import { Search } from 'lucide-react';
 import { Button } from '@heroui/react';
+import BooksPagination from '../components/common/BooksPagination';
 
 type Props = {
-  searchParams: Promise<{ search?: string }>
+  searchParams: Promise<{ search?: string, page?: string; }>;
 };
 
 const BooksPage = async ({ searchParams }: Props) => {
   
-  const { search } = await searchParams;
-  const books = await getAllBooks(search)
+  const { search, page } = await searchParams;
+  const currentPage = Number(page) || 1;
+  const data = await getAllBooks(search, currentPage);
+  const books = data.books;
+  const total = data.total;
+  const totalPages = Math.ceil(total / 8);
+
 
   return (
     <section className="py-10 bg-default-50 px-6 md:px-12 lg:px-24">
@@ -56,8 +62,14 @@ const BooksPage = async ({ searchParams }: Props) => {
             ></BookCard>
           ))
         }
+        
       </div>
 
+      <BooksPagination
+       currentPage={currentPage}
+       totalPages={totalPages}
+       search={search}
+      />
     </section>
   );
 };
