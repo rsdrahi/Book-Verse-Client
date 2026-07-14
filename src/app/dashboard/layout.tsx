@@ -21,7 +21,7 @@ const DashboardLayout = ({ children, }: { children: React.ReactNode; }) => {
               Zahid
             </h2>
             <p className="text-xs font-semibold uppercase tracking-wider text-primary bg-primary-50 dark:bg-primary-950/30 px-2 py-0.5 rounded-md mt-1">
-              Library Manager
+            Your Books
             </p>
           </div>
 

@@ -25,3 +25,8 @@ export const getSingleBook = async (
 ): Promise<Book> => {
   return await serverFetch(`/books/${id}`);
 };
+
+export const getBorrowBooks = async () => {
+  const res = await serverFetch("/borrow")
+  return res;
+}
