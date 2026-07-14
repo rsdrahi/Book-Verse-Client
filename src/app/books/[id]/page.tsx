@@ -1,6 +1,7 @@
+import BorrowModal from "@/app/components/common/BorrowModal";
 import { getSingleBook } from "@/lib/api/books/server";
 import { Button, Chip } from "@heroui/react";
-import { ArrowLeft, BookOpen, Layers, User } from "lucide-react";
+import { BookOpen, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -19,7 +20,8 @@ const BooksDetailsPage = async ({ params }: Props) => {
       {/* Back Button */}
       <div className="mb-8">
         <Link href="/books">
-          <Button  size="sm" startContent={<ArrowLeft size={16} />} className="text-default-500 font-medium">
+          <Button  size="sm"  
+            className="text-default-500 font-medium">
             Back to Books
           </Button>
         </Link>
@@ -80,6 +82,11 @@ const BooksDetailsPage = async ({ params }: Props) => {
             <p className="text-default-600 leading-relaxed text-sm md:text-base">
               {description}
             </p>
+          </div>
+          <div>
+            <BorrowModal
+            book={book}
+            />
           </div>
         </div>
       </div>

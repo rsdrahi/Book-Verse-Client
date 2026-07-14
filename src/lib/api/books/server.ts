@@ -16,8 +16,8 @@ export const getAllBooks = async (search?: string, page: number=1): Promise<Book
 };
 
 export const getFeaturedBooks = async (): Promise<Book[]> => {
-  const books: Book[] = await serverFetch("/books");
-  return books.slice(0, 4);
+  const data: BooksResponse  = await serverFetch("/books");
+  return data.books.slice(0, 4);
 };
 
 export const getSingleBook = async (
