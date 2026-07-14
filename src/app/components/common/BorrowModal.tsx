@@ -2,6 +2,7 @@
 import { Book } from "@/app/types/books";
 import { bookBorrow } from "@/lib/api/books/actions";
 import {Button, Input, Label, Modal, Surface, TextField} from "@heroui/react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
@@ -11,6 +12,7 @@ type Props = {
 
 const BorrowModal = ({book}: Props) => {
 
+  const router = useRouter();
   const [quantity, setQuantity] = useState(1);
   const [dueDate, setDueDate] = useState('');
 
@@ -25,6 +27,7 @@ const BorrowModal = ({book}: Props) => {
     // console.log(data, "Book Data");
     if (data) {
       toast.success(`You Borrowed ${book.title}`);
+      router.refresh();
     }
   }
 
