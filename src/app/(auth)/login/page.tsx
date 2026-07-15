@@ -39,12 +39,12 @@ const LoginPage = () => {
       router.push("/")
     }
   };
-  // const handleGoogleLogin = async () => {
-  //   await signIn.social({
-  //     provider: "google",
-  //     callbackURL: "/"
-  //   })
-  // }
+  const handleGoogleLogin = async () => {
+    await signIn.social({
+      provider: "google",
+      callbackURL: "/"
+    })
+  }
 
   return (
     <div className="min-h-[85vh] flex items-center justify-center px-4 py-12 bg-background">
@@ -121,7 +121,7 @@ const LoginPage = () => {
           </Button>
         </form>
 
-        {/* <div className="mt-3">
+        <div className="mt-3">
           <Button
             variant='outline'
             className="w-full h-11"
@@ -129,7 +129,7 @@ const LoginPage = () => {
            >
             <FcGoogle />  Continue with Google
          </Button>
-        </div> */}
+        </div>
 
         {/* footer */}
         <CardFooter className="flex justify-center pt-6 pb-0 px-0">

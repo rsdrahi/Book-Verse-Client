@@ -46,7 +46,7 @@ const BorrowModal = ({book}: Props) => {
             <Modal.Body className="p-6">
               <Surface variant="default">
                 <form className="flex flex-col gap-4">
-                  <TextField defaultValue={quantity} className="w-full" name="number" type="number" variant="secondary">
+                  <TextField  className="w-full" name="number" type="number" variant="secondary">
                     <Label>Quantity</Label>
                     <Input placeholder=""
                       min={1}
