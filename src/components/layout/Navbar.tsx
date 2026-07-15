@@ -10,7 +10,9 @@ import { signOut, useSession } from "@/lib/auth-client";
 
 const Navbar = () => {
   const { data: session } = useSession();
+  // const session = null;
   const [open, setOpen] = useState(false);
+  console.log(session, "User");
 
   const handleSignOut = async () => {
     await signOut();
@@ -58,10 +60,22 @@ const Navbar = () => {
                 <Avatar
                  size="md"
                  className="cursor-pointer"
-                 src={session.user.image || undefined}
-                 name={session.user.name || "User"}
+                 >
+                <Avatar.Image
+                 src={session?.user?.image || ""}
+                 alt={session?.user?.name || "User"}
                 />
-             </Link>
+
+                <Avatar.Fallback>
+                  {session?.user?.name
+                   ?.split(" ")
+                   .map((word) => word[0])
+                   .join("")
+                   .slice(0, 2)
+                  .toUpperCase()}
+               </Avatar.Fallback>
+             </Avatar>
+            </Link>
 
               <Button
                 onClick={handleSignOut}

@@ -1,5 +1,4 @@
 import { cards } from '@/constants/dashboard';
-import React from 'react';
 
 const DashboardPage = () => {
   return (

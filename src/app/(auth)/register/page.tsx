@@ -52,12 +52,12 @@ const RegisterPage = () => {
     
     console.log(user, "User");
   }
-  const handleGoogleRegister = async () => {
-    await signIn.social({
-      provider: "google",
-      callbackURL: '/',
-    })
-  }
+  // const handleGoogleRegister = async () => {
+  //   await signIn.social({
+  //     provider: "google",
+  //     callbackURL: '/',
+  //   })
+  // }
 
   return (
     <div className="min-h-[85vh] flex items-center justify-center px-4 py-12 bg-background">
@@ -173,7 +173,7 @@ const RegisterPage = () => {
           </Button>
         </form>
 
-        <div className="mt-3">
+        {/* <div className="mt-3">
           <Button
             variant='outline'
             className="w-full h-11"
@@ -181,7 +181,7 @@ const RegisterPage = () => {
             >
              <FcGoogle/> Continue with Google
           </Button>
-        </div>
+        </div> */}
 
         {/* footer link */}
         <CardFooter className="flex justify-center pt-6 pb-0 px-0">
