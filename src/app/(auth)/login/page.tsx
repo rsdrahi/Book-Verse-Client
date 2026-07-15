@@ -2,9 +2,10 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { FcGoogle } from "react-icons/fc";
 import { Card, CardHeader, CardFooter, Button } from '@heroui/react';
 import { Lock, Mail } from 'lucide-react';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { FaEye, FaEyeSlash, FaGoogle } from 'react-icons/fa';
 import { useRouter } from 'next/navigation';
 import { signIn } from '@/lib/auth-client';
 import toast from 'react-hot-toast';
@@ -38,6 +39,12 @@ const LoginPage = () => {
       router.push("/")
     }
   };
+  const handleGoogleLogin = async () => {
+    await signIn.social({
+      provider: "google",
+      callbackURL: "/"
+    })
+  }
 
   return (
     <div className="min-h-[85vh] flex items-center justify-center px-4 py-12 bg-background">
@@ -113,6 +120,16 @@ const LoginPage = () => {
             Login
           </Button>
         </form>
+
+        <div className="mt-3">
+          <Button
+            variant='outline'
+            className="w-full h-11"
+            onClick={handleGoogleLogin}
+           >
+            <FcGoogle />  Continue with Google
+         </Button>
+        </div>
 
         {/* footer */}
         <CardFooter className="flex justify-center pt-6 pb-0 px-0">

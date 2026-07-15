@@ -1,6 +1,7 @@
 'use client'
-import { signUp } from '@/lib/auth-client';
-import { Button, Card, CardContent, CardFooter, CardHeader, Form, Input} from '@heroui/react';
+import { signIn, signUp } from '@/lib/auth-client';
+import { Button, Card, CardContent, CardFooter, CardHeader, Form, Input } from '@heroui/react';
+import { FcGoogle } from "react-icons/fc";
 import { Lock, Mail, User } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -50,6 +51,12 @@ const RegisterPage = () => {
     }
     
     console.log(user, "User");
+  }
+  const handleGoogleRegister = async () => {
+    await signIn.social({
+      provider: "google",
+      callbackURL: '/',
+    })
   }
 
   return (
@@ -165,6 +172,16 @@ const RegisterPage = () => {
             Register
           </Button>
         </form>
+
+        <div className="mt-3">
+          <Button
+            variant='outline'
+            className="w-full h-11"
+            onClick={handleGoogleRegister}
+            >
+             <FcGoogle/> Continue with Google
+          </Button>
+        </div>
 
         {/* footer link */}
         <CardFooter className="flex justify-center pt-6 pb-0 px-0">
